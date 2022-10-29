@@ -1,9 +1,11 @@
-import React, { useState,useEffect } from 'react' 
+import React, { useState,useEffect,usefetch } from 'react' 
+import axios from 'axios'
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 const Regester = () => {
+ 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [address, setAddress] = useState('')
@@ -14,8 +16,20 @@ const Regester = () => {
 
     const handleSubmit = (e) => {
         if (e && e.preventDefault) { e.preventDefault(); }
+        axios.get('http://127.0.0.1:8000/api/users', {
+            email:email,
+            password:password,
+            address:address
+        })
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
              console.log(email, password, address);
-    }
+    } 
+    
     useEffect(() => { 
         handleSubmit();
     }, []);
